@@ -7,8 +7,6 @@
   "permissions": [
     "https://*.singly.com/",
     "https://*.lvh.me/",
-    "https://localhost/",
-    "https://127.0.0.1/",
     "history"
   ],
   "icons": { "128": "icon.png" }
