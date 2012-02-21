@@ -1,0 +1,14 @@
+<html>
+  <script type="text/javascript">
+    function installApp(evt) {
+      evt.preventDefault();
+      chrome.webstore.install('https://chrome.google.com/webstore/detail/lpgmibhffdfjkahckjnkndlhijeigknn/', function() {
+        window.location = window.location + '?done=true';
+      }, function(err) {
+        alert(err);
+      });
+      return false;
+    }
+  </script>
+  <a href="#" onclick="installApp();">click here to install!</a>
+</html>

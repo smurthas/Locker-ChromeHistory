@@ -1,8 +1,9 @@
 {
-  "name": "histomine",
+  "name": "chromehistory",
   "version": "0.0.1",
   "author": {
-    "name":"Singly <nerds@singly.com>"
+    "name": "Singly",
+    "email": "nerds@singly.com"
   },
   "contributors": [
     {
@@ -19,17 +20,17 @@
     "url": "http://creativecommons.org/licenses/MIT/"
   }],
   "repository":{
-    "title": "HistoMine",
+    "handle": "chromehistory",
+    "title": "Chrome History",
     "description": "Save all of your Chrome browser history",
-    "type": "app",
-    "static":"true",
-    "uses": {
-      "types": [
-        "links"
-      ],
-      "services": [
-        "chrome"
-      ]
+    "author": "nerds",
+    "update": "auto",
+    "github": "https://github.com/LockerProject/Locker",
+    "type": "connector",
+    "static": "false",
+    "oauthSize": {
+      "width": 630,
+      "height": 500
     }
   }
 }
