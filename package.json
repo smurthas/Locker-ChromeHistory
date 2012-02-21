@@ -1,0 +1,35 @@
+{
+  "name": "histomine",
+  "version": "0.0.1",
+  "author": {
+    "name":"Singly <nerds@singly.com>"
+  },
+  "contributors": [
+    {
+      "name": "Kristján Pétursson",
+      "email": "kristjan@gmail.com"
+    },
+    {
+      "name": "Simon Murtha-Smith",
+      "email": "simon@murtha-smith.com"
+    }
+  ],
+  "licenses": [{
+    "type": "MIT",
+    "url": "http://creativecommons.org/licenses/MIT/"
+  }],
+  "repository":{
+    "title": "HistoMine",
+    "description": "Save all of your Chrome browser history",
+    "type": "app",
+    "static":"true",
+    "uses": {
+      "types": [
+        "links"
+      ],
+      "services": [
+        "chrome"
+      ]
+    }
+  }
+}
