@@ -3,9 +3,12 @@
   "version": "0.0.3",
   "description": "Save all of your Chrome browser history",
   "background_page" : "background.html",
+  "options_page" : "options.html",
   "permissions": [
-    "https://api.singly.com/",
-    "https://lvh.me:8443/",
+    "https://*.singly.com/",
+    "https://*.lvh.me/",
+    "https://localhost/",
+    "https://127.0.0.1/",
     "history"
   ],
   "icons": { "128": "icon.png" }

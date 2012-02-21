@@ -1,0 +1,52 @@
+body {
+  padding: 20px;
+  font-family: 'Helvetica', 'Arial', sans-serif;
+}
+.container {
+  width: 470px;
+  margin: 0 auto;
+}
+.error {
+  display: none;
+  margin: 0;
+  padding: 10px 20px;
+  background-color: #DD0;
+  color: #333;
+  font-size: 14px;
+  line-height: 20px;
+}
+form {
+  padding: 20px;
+  background-color: #EFEFEF;
+}
+p {
+  margin: 10px 0;
+}
+p a {
+  float: right;
+  font-size: 12px;
+}
+label {
+  display: inline-block;
+  width: 100px;
+  margin-right: 20px;
+  text-align: right;
+}
+input[type=text] {
+  width: 300px;
+}
+.buttons {
+  padding: 10px 20px;
+  background-color: #666;
+  text-align: right;
+}
+button {
+  border: none;
+  border-radius: 5px;
+  background-color: #FFF;
+  font-size: 18px;
+  cursor: pointer;
+}
+button:active {
+  background-color: #EEE;
+}

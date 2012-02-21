@@ -1,0 +1,35 @@
+<!doctype html>
+<html>
+  <head>
+    <title>HistoMine Options</title>
+    <link rel="stylesheet" type="text/css" href="options.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>HistoMine Options</h1>
+      <p id="couldntFetchToken" class="error">
+        There was an error fetching your token from the server. Please make sure
+        you are online and logged in, or enter the token yourself.
+      </p>
+      <form id="options" action="">
+        <p>
+          <label for="apiToken">API Token:</label>
+          <input type="text" id="apiToken" />
+          <a href="#" id="fetchApiToken">Fetch from server</a>
+        </p>
+        <p>
+          <label for="apiHost">Host:</label>
+          <select id="apiHost">
+            <option value="singly.com">singly.com</option>
+            <option value="lvh.me:8443">lvh.me:8443</option>
+          </select>
+        </p>
+      </form>
+      <div class="buttons">
+        <button id="save">Save</button>
+      </div>
+    </div>
+    <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js'></script>
+    <script src='options.js'></script>
+  </body>
+</html>
