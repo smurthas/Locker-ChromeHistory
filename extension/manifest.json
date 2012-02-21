@@ -1,11 +1,12 @@
 {
   "name": "HistoMine",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "description": "Save all of your Chrome browser history",
   "background_page" : "background.html",
   "permissions": [
     "https://api.singly.com/",
     "https://lvh.me:8443/",
     "history"
-  ]
+  ],
+  "icons": { "128": "icon.png" }
 }
