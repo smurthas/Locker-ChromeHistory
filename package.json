@@ -25,6 +25,7 @@
     "description": "Save all of your Chrome browser history",
     "author": "nerds",
     "update": "auto",
+    "keys": false,
     "github": "https://github.com/LockerProject/Locker",
     "type": "connector",
     "static": "false",
