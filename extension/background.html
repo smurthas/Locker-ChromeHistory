@@ -9,7 +9,6 @@ var postUrl = 'https://api.' + host + '/';
 
 if(!apiToken) {
   $.getJSON('https://' + host + '/users/me/apiToken', function(resp) {
-    console.error("DEBUG: resp", resp);
     apiToken = resp.apiToken;
     if(!apiToken) apiToken = prompt('Enter your api key for ' + host);
     start(apiToken);
@@ -20,8 +19,10 @@ if(!apiToken) {
 function start(apiToken) {
   postUrl += apiToken;
   localStorage.setItem(host + '_apiToken', apiToken);
-  chrome.history.onVisited.addListener(handleVisit);
-  postHistory();
+  $.ajax({url:'https://' + host + '/auth/chromehistory?done=true', success: function(yep) {
+    chrome.history.onVisited.addListener(handleVisit);
+    postHistory();
+  }});
 }
 
 function postVisits(visitItems, callback) {
