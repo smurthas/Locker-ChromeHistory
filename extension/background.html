@@ -1,10 +1,97 @@
+<script src='https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js'></script>
+<script src='async.js'></script>
 <script>
-alert('wahooo!');
-chrome.history.onVisited.addListener(function(historyItem) {
-  console.log('historyItem...', historyItem);
-  chrome.history.getVisits({url:historyItem.url}, function(visitsArray) {
-    console.log('visitsArray...', visitsArray[visitsArray.length-1]);
+// alert('wahooo!');
+
+var host = 'lvh.me:8443'
+var apiToken = localStorage.getItem(host + '_apiToken');
+var postUrl = 'https://api.' + host + '/';
+
+if(!apiToken) {
+  $.getJSON('https://' + host + '/users/me/apiToken', function(resp) {
+    console.error("DEBUG: resp", resp);
+    apiToken = resp.apiToken;
+    if(!apiToken) apiToken = prompt('Enter your api key for ' + host);
+    start(apiToken);
   });
-  // postURLs([historyItem]);
-});
+} else {
+  start(apiToken);
+}
+function start(apiToken) {
+  postUrl += apiToken;
+  localStorage.setItem(host + '_apiToken', apiToken);
+  chrome.history.onVisited.addListener(handleVisit);
+  postHistory();
+}
+
+function postVisits(visitItems, callback) {
+  return doPost(visitItems, 'visits', callback).error(function(b) { console.log('error', b); });
+}
+
+function postHistories(historyItem, callback) {
+  return doPost(historyItem, 'history', callback).error(function(b) { console.log('error', b); });
+}
+
+function doPost(items, nameSpace, callback) {
+  if(!(items instanceof Array)) items = [items];
+  var itms = [];
+  for(var i in items) itms.push({obj:items[i]});
+  console.error("DEBUG: itms", itms.length);
+  return $.post(postUrl + '/push/chromehistory-' + nameSpace, {data: itms}, callback);
+}
+
+var PAGE_SIZE = 200;
+//grabs all urls since the last successful post and posts them
+function postHistory(endTime) {
+  var search = {text:'', maxResults:PAGE_SIZE, startTime:0};
+  if(typeof endTime !== 'undefined') search.endTime = endTime;
+  chrome.history.search(search, function(historyItems) {
+    console.error("DEBUG: historyItems", historyItems.length);
+    if(!historyItems || historyItems.length < 1) return;
+    handleHistories(historyItems, function() {
+      postHistory(historyItems[historyItems.length-1].lastVisitTime);
+    });
+  });
+}
+
+var VISIT_CHUNK_SIZE = 2000;
+function handleHistories(historyItems, callback) {
+  var visitQueue = [];
+  async.forEachSeries(historyItems, function(historyItem, cb) {
+    var start = Date.now();
+    getVisits(historyItem, function(visitItems) {
+      if(visitQueue.length + visitItems.length < VISIT_CHUNK_SIZE) {
+        visitQueue = visitQueue.concat(visitItems);
+        return setTimeout(cb, 10);
+      }
+      postVisits(visitQueue, function() {
+        visitQueue = [];
+        var et = Date.now() - start;
+        console.error("DEBUG: et", et);
+        setTimeout(cb, et * 2);
+      });
+    });
+  }, function() {
+    postHistories(historyItems, function() {
+      console.log('phew!');
+      callback();
+    });
+  });
+}
+
+function getVisits(historyItem, callback) {
+  chrome.history.getVisits({url:historyItem.url}, callback);
+}
+
+function handleVisit(historyItem) {
+  getVisits(historyItem, function(visitsArray) {
+    var visit = visitsArray[visitsArray.length-1];
+    console.log('visitsArray...', visit);
+    postVisits(visit);
+  });
+  postHistories(historyItem, function() {
+    console.log('historyItem...', historyItem);
+  });
+}
+
 </script>
