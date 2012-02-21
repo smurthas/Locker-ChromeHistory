@@ -1,0 +1,10 @@
+<script>
+alert('wahooo!');
+chrome.history.onVisited.addListener(function(historyItem) {
+  console.log('historyItem...', historyItem);
+  chrome.history.getVisits({url:historyItem.url}, function(visitsArray) {
+    console.log('visitsArray...', visitsArray[visitsArray.length-1]);
+  });
+  // postURLs([historyItem]);
+});
+</script>
