@@ -2,15 +2,5 @@
   <head>
     <link rel="chrome-webstore-item" href="https://chrome.google.com/webstore/detail/lpgmibhffdfjkahckjnkndlhijeigknn/">
   </head>
-  <script type="text/javascript">
-    function installApp() {
-      chrome.webstore.install('https://chrome.google.com/webstore/detail/lpgmibhffdfjkahckjnkndlhijeigknn/', function() {
-        window.location = window.location + '?done=true';
-      }, function(err) {
-        alert(err);
-      });
-      return false;
-    }
-  </script>
-  <a href="#" onclick="installApp();">click here to install!</a>
+  <a href="?extension=true" onclick="installApp();">click here to install!</a>
 </html>
