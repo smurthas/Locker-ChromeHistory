@@ -1,42 +1,31 @@
-HistoMineOptions = (function() {
+if (typeof HistoMine === 'undefined') HistoMine = {};
+HistoMine.Options = (function() {
   function init() {
     $('#fetchApiToken').click(fetchApiToken);
-    $('#apiHost').change(updateToken);
     $('#save').click(saveOptions);
     restoreOptions();
   }
 
   function restoreOptions() {
-    var host = localStorage.getItem('apiHost') || 'singly.com';
-    var token = localStorage.getItem(host + '_apiToken');
-    $('#apiHost').val(host);
-    if (token && token.length > 0) {
-      $('#apiToken').val(token);
-    } else {
-      fetchApiToken();
-    }
+    HistoMine.Utils.getApiToken(function(apiToken) {
+      if (apiToken && apiToken.length > 0) {
+        $('#apiToken').val(apiToken);
+      } else {
+        fetchApiToken();
+      }
+    });
   }
 
   function saveOptions() {
-    var host = $('#apiHost').val();
-    var token = $('#apiToken').val();
-    localStorage.setItem('apiHost', host);
-    localStorage.setItem(host + '_apiToken', token);
-  }
-
-  function updateToken() {
-    var host = $('#apiHost').val();
-    var token = localStorage.getItem(host + '_apiToken');
-    if (token && token.length > 0) {
-      $('#apiToken').val(token);
-      saveOptions();
-    }
+    var apiToken = $('#apiToken').val();
+    HistoMine.Utils.setApiToken(apiToken);
+    setTimeout(chrome.extension.getBackgroundPage().HistoMine.Background.init, 0);
+    window.close();
   }
 
   function fetchApiToken(evt) {
     if (typeof(evt) !== 'undefined') evt.preventDefault();
-    var host = $('#apiHost').val();
-    $.getJSON('https://' + host + '/users/me/apiToken', function(resp) {
+    $.getJSON('https://' + HistoMine.config.host + '/users/me/apiToken', function(resp) {
       if (resp && resp.apiToken) {
         $('.error').slideUp('fast');
         $('#apiToken').val(resp.apiToken);
@@ -52,4 +41,4 @@ HistoMineOptions = (function() {
   };
 })();
 
-$(HistoMineOptions.init);
+$(HistoMine.Options.init);
